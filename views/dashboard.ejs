@@ -1,0 +1,85 @@
+<h1 class="text-center mb-3"> Bands Details</h1>
+<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<form action="/bands/create" method="POST">
+    <div class="form-group">
+        <label for="email">Band Name</label>
+        <input type="name" id="name" name="name" class="form-control" placeholder="Enter Name" required />
+    </div>
+    <div class="form-group">
+        <label for="password">Description</label>
+        <input type="name" id="desc" name="desc" class="form-control" placeholder="Enter details" required />
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Add</button>
+</form>
+
+<div class="card">
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Bands</h3>
+    <div class="card-body">
+        <div id="table" class="table-editable">
+            <span class="table-add float-right mb-3 mr-2"></span>
+            <table class="table table-bordered table-responsive-md table-striped text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">Band Name</th>
+                        <th class="text-center">Band Description</th>
+                        <th class="text-center">Remove/Edit</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i=0; i < data.length; i++) { %>
+                    <tr>
+                        <td class="pt-3-half" contenteditable="true"><%= data[i].Title %></td>
+                        <td class="pt-3-half" contenteditable="true"><%= data[i].Description %></td>
+                        <td>
+                            <span class="table-remove"><button type="button"
+                                    class="btn btn btn-warning btn-rounded btn-sm my-0" data-toggle="modal"
+                                    data-target="#myModal<%=data[i].id%>">Edit</button></span>
+                            <div class="modal fade" id="myModal<%=data[i].id%>" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Edit</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <form action="/bands/update/<%=data[i].id%>" method="POST">
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <label for="staticEmail" class="col-sm-4 col-form-label">Enter
+                                                        Title:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" name="name" class="form-control-plaintext"
+                                                            id="staticEmail" value="<%= data[i].Title %>" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="staticEmail" class="col-sm-4 col-form-label">Enter
+                                                        Description:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" name="desc" class="form-control-plaintext"
+                                                            id="staticEmail" value="<%= data[i].Description %>"
+                                                            required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="table-remove"><a href="/bands/delete/<%=data[i].id%>"
+                                    class="indigo-text"><button type="submit"
+                                        class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></a></span>
+                        </td>
+                    </tr>
+                    <% } %>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
